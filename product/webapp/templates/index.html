@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block menu %}
-   <li><a href=#>Add Task</a></li>
+   <li><a href={% url 'create' %}>Add Product</a></li>
 {% endblock %}
 {% block content %}
    <h1>Products:</h1>
@@ -8,15 +8,12 @@
     <form method="POST" action="{% url "index"  %}">
         {% csrf_token %}
    {% for product in products %}
-       <h2><input type="checkbox" value="{{ product.pk }}" id="{{ product.pk }}" name="del" > <a href="{% url 'product_view' product.pk %}">{{ product.name }}</a></h2>
+       <h2><input type="checkbox" value="{{ product.pk }}" id="{{ product.pk }}" name="del" style="width: 20px; height: 20px"> <a href="{% url 'product_view' product.pk %}">{{ product.name }}</a></h2>
        <div>Price: {{ product.price }} c.</div>
-       <div>Category date: {{ product.get_category_display }}</div>
+       <div>Category : {{ product.get_category_display }}</div>
 
-{#       "{% url 'task_view' task.pk %}"#}
-       <a href=#>Edit</a>
-{#       "{% url 'task_update' task.pk %}"#}
-       <a href=#>Delete</a>
-{#       "{% url 'task_delete' task.pk %}"#}
+       <a href="{% url 'product_update' product.pk %}">Edit</a>
+       <a href="{% url 'product_delete' product.pk %}">Delete</a>
        <hr/>
    {% endfor %}
 
@@ -28,7 +25,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Are you sure want to delete task?</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Are you sure want to delete products?</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>

@@ -7,7 +7,7 @@
 {% endfor %}
 
 {% for field in form %}
-    <label for="{{ field.id_for_label }}">{{ field.label }}*</label><br/>
+    <label for="{{ field.id_for_label }}" style="width: 150px">{{ field.label }}</label>
     {% if field.errors %}
         {{ field }}
         {% for error in field.errors %}

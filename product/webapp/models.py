@@ -1,6 +1,8 @@
 from django.db import models
 
 
+
+
 PRODUCT_OTHER_CHOICE = 'other'
 PRODUCT_CATEGORY_CHOICES = (
     (PRODUCT_OTHER_CHOICE, 'Разное'),
