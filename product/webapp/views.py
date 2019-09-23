@@ -1,11 +1,19 @@
 from webapp.models import Product
-from webapp.forms import ProductForm
+from webapp.forms import ProductForm, FindForm
 from django.shortcuts import render, get_object_or_404, redirect
 
 def index_view(request, *args, **kwargs):
     if request.method == 'GET':
+        form = FindForm()
         products = Product.objects.exclude(amount=0).order_by('category', 'name')
-        return render(request, 'index.html', context={'products': products})
+        categories = []
+        for product in products:
+            print(str(product.category))
+            category = str(product.category)
+            # print(category[1].strip())
+            if category not in categories:
+                categories.append(category)
+        return render(request, 'index.html', context={'products': products, 'form': form, 'categories': categories})
     elif request.method =='POST':
         prod_del = request.POST.getlist('del')
         Product.objects.filter(pk__in=prod_del).delete()
@@ -52,4 +60,11 @@ def product_delete(request, pk):
         product.delete()
         return redirect('index')
 
-
+def find_view(request, *args, **kwargs):
+    form =FindForm(data=request.GET)
+    if form.is_valid():
+        name = form.cleaned_data['name']
+        products = Product.objects.filter(name__contains=name).exclude(amount=0).order_by('category', 'name')
+        return render(request, 'index.html', {'products': products, 'form': form})
+    else:
+        return redirect('index')

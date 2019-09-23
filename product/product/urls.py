@@ -9,4 +9,5 @@ urlpatterns = [
     path('product/add', webapp_views.product_create_view, name='create'),
     path('product/<int:pk>/edit/', webapp_views.product_update_view, name='product_update'),
     path('product/<int:pk>/delete/', webapp_views.product_delete, name='product_delete'),
+    path('find/', webapp_views.find_view, name='find')
 ]
